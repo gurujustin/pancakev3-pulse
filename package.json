@@ -1,0 +1,67 @@
+{
+  "name": "pancake-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "apis/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --filter=web...",
+    "dev:aptos": "yarn turbo run dev --filter=aptos-web...",
+    "dev:blog": "yarn turbo run dev --filter=blog...",
+    "storybook": "turbo run start --filter=uikit...",
+    "build:storybook": "turbo run build:storybook --filter=uikit...",
+    "build": "turbo run build --filter=web...",
+    "build:packages": "turbo run build --filter=./packages/*",
+    "start": "turbo run start --filter=web",
+    "test:config": "yarn turbo run test:config --filter=[HEAD^1]",
+    "test:ci": "yarn turbo run test --filter=[HEAD^1]",
+    "lint": "turbo run lint --filter=web",
+    "lint:report": "eslint --no-error-on-unmatched-pattern --max-warnings=0",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json}\"",
+    "format:write": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
+    "format:check:staged": "lint-staged",
+    "e2e:ci": "turbo run build --filter=web...[HEAD^1] && turbo run integration-test --filter=e2e...[HEAD^1]",
+    "updateLPsAPR": "yarn turbo run build --filter=@pancakeswap/farms && NODE_PATH=./apps/web/src tsx --tsconfig ./apps/web/tsconfig.json scripts/updateLPsAPR.ts",
+    "updateAptosLPsAPR": "yarn turbo run build --filter=@pancakeswap/aptos-swap-sdk && NODE_PATH=./apps/aptos/src tsx --tsconfig ./apps/aptos/tsconfig.json  scripts/updateAptosLpsAPR/index.ts",
+    "postinstall": "turbo run postinstall",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release-packages": "turbo run build --filter=./packages/* && changeset version && changeset publish",
+    "prepare": "husky install"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.25.0",
+    "@stylelint/postcss-css-in-js": "^0.37.2",
+    "eslint-plugin-lodash": "^7.4.0",
+    "eslint-plugin-strict-null-checks": "0.0.21",
+    "husky": "^7.0.0",
+    "jest": "^27.4.5",
+    "lint-staged": "^12.3.4",
+    "prettier": "^2.8.3",
+    "serve": "^12.0.0",
+    "start-server-and-test": "^1.14.0",
+    "stylelint": "^14.5.3",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recommended": "^7.0.0",
+    "stylelint-config-standard": "^25.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "tilg": "^0.1.1",
+    "tsx": "^3.12.6",
+    "tsconfig": "*",
+    "turbo": "1.7.0",
+    "vitest": "^0.27.2"
+  },
+  "volta": {
+    "node": "18.16.0"
+  },
+  "dependencies": {
+    "ws": "^8.13.0"
+  }
+}
